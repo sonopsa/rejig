@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "rejig",
+	"version": "${version}",
+	"name": "Rejig",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/rejig/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.github.sonopsa.rejig.Rejig"
+		],
+		"client": [
+			"com.github.sonopsa.rejig.RejigClient"
+		],
+		"fabric-datagen": [
+			"com.github.sonopsa.rejig.RejigDataGenerator"
+		]
+	},
+	"mixins": [
+		"rejig.mixins.json",
+		{
+			"config": "rejig.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.7",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
