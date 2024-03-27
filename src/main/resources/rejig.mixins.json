@@ -3,7 +3,14 @@
 	"package": "com.github.sonopsa.rejig.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"block.lightFiltering.AbstractCauldronLightFiltering",
+		"block.lightFiltering.AnvilLightFiltering",
+		"block.lightFiltering.BeaconLightFiltering",
+		"block.lightFiltering.BrewingStandLightFiltering",
+		"block.lightFiltering.HopperLightFiltering",
+		"block.lightFiltering.IceLightFiltering",
+		"block.lightFiltering.WaterLightFiltering"
 	],
 	"injectors": {
 		"defaultRequire": 1
