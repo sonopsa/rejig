@@ -1,4 +1,4 @@
-package com.github.sonopsa.rejig.mixin.block.lightFiltering;
+package com.github.sonopsa.rejig.mixin.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

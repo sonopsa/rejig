@@ -58,11 +58,14 @@ dependencies {
 	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 	modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
+	// Sodium support
+	modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
+	modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"
 
 	// Mods to help testing
 	modLocalRuntime "maven.modrinth:auth-me:8.0.0+1.20.4"
 	modLocalRuntime "maven.modrinth:cloth-config:13.0.121+fabric"
+	modLocalRuntime "maven.modrinth:carpet:1.4.128"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
