@@ -1,22 +1,24 @@
 {
-	"required": true,
-	"package": "com.github.sonopsa.rejig.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"ExampleMixin",
-		"block.LowerSnowCollision",
-		"block.lightFiltering.AbstractCauldronLightFiltering",
-		"block.lightFiltering.AnvilLightFiltering",
-		"block.lightFiltering.BeaconLightFiltering",
-		"block.lightFiltering.BrewingStandLightFiltering",
-		"block.lightFiltering.HopperLightFiltering",
-		"block.lightFiltering.IceLightFiltering",
-		"block.lightFiltering.WaterLightFiltering",
-		"world.BiomeSnowHeight"
-	],
-	"server": [
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.github.sonopsa.rejig.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ExampleMixin",
+    "block.lightFiltering.AbstractCauldronLightFiltering",
+    "block.lightFiltering.AnvilLightFiltering",
+    "block.lightFiltering.BeaconLightFiltering",
+    "block.lightFiltering.BrewingStandLightFiltering",
+    "block.lightFiltering.HopperLightFiltering",
+    "block.lightFiltering.IceLightFiltering",
+    "block.lightFiltering.WaterLightFiltering",
+    "entity.FoxLongerWindup",
+    "entity.FoxMoreHealth",
+    "entity.ParrotStayOn",
+    "world.BiomeSnowHeight"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
