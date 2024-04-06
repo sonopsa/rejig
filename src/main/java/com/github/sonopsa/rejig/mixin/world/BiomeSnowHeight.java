@@ -5,54 +5,45 @@ import com.github.sonopsa.rejig.world.SnowNoiseSampler;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.RandomSequencesState;
 import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.level.ServerWorldProperties;
-import net.minecraft.world.level.storage.LevelStorage;
 import org.joml.Vector2i;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
-import java.util.concurrent.Executor;
 
 @Mixin(ServerWorld.class)
 public abstract class BiomeSnowHeight {
     @Unique
     private Registry<Biome> biomeRegistry;
     @Unique
-    private ServerWorld serverWorld;
-    @Unique
     private SnowNoiseSampler snowNoiseSampler;
     @Unique
     private boolean isFlat;
 
+    @Shadow
+    public abstract long getSeed();
+    @Shadow public abstract ServerWorld toServerWorld();
+    @Shadow public abstract boolean isFlat();
+
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void init(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey worldKey, DimensionOptions dimensionOptions, WorldGenerationProgressListener worldGenerationProgressListener, boolean debugWorld, long seed, List spawners, boolean shouldTickTime, RandomSequencesState randomSequencesState, CallbackInfo ci) {
-        // TODO: don't use double casting for this
-        serverWorld = (ServerWorld) (Object) this;
-        biomeRegistry = serverWorld.getRegistryManager().get(RegistryKeys.BIOME);
-        snowNoiseSampler = new SnowNoiseSampler(serverWorld.getSeed());
-        isFlat = false;
+    private void init(CallbackInfo ci) {
+        biomeRegistry = toServerWorld().getRegistryManager().get(RegistryKeys.BIOME);
+        snowNoiseSampler = new SnowNoiseSampler(getSeed());
+        isFlat = isFlat();
     }
 
-    // random ticks seem to take 2% longer with this
-
-    @Inject(method = "tickIceAndSnow", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;canSetSnow(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z", shift = At.Shift.AFTER))
+    // TODO: does this affect performance
+    @Inject(method = "tickIceAndSnow", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;"))
     private void injected(BlockPos pos, CallbackInfo ci, @Local(ordinal = 1) BlockPos blockPos, @Local(ordinal = 0) Biome biome, @Local(ordinal = 0) LocalIntRef intRef) {
 
-        int snowAccumulationHeightRule = intRef.get();
+        int snowAccumulationRule = intRef.get();
 
         double snowNoise = snowNoiseSampler.getSample(blockPos.getX(), blockPos.getZ(), 1.2f);
         snowNoise = Math.min(snowNoiseSampler.getSample(-blockPos.getX() + 1024, -blockPos.getZ() + 1024, 8.0f), snowNoise);
@@ -90,15 +81,16 @@ public abstract class BiomeSnowHeight {
             }
         }
 
-        intRef.set(height * snowAccumulationHeightRule);
+        intRef.set(height * snowAccumulationRule);
     }
 
     @Unique
     private boolean brighterThanNeighbors(BlockPos pos){
-        boolean north = serverWorld.getLightLevel(LightType.SKY, pos) > serverWorld.getLightLevel(LightType.SKY, pos.north());
-        boolean south = serverWorld.getLightLevel(LightType.SKY, pos) > serverWorld.getLightLevel(LightType.SKY, pos.south());
-        boolean east = serverWorld.getLightLevel(LightType.SKY, pos) > serverWorld.getLightLevel(LightType.SKY, pos.east());
-        boolean west = serverWorld.getLightLevel(LightType.SKY, pos) > serverWorld.getLightLevel(LightType.SKY, pos.west());
-        return north | south | east | west;
+        int lightLevel = toServerWorld().getLightLevel(LightType.SKY, pos);
+
+        return (lightLevel > toServerWorld().getLightLevel(LightType.SKY, pos.north())  ||
+                lightLevel > toServerWorld().getLightLevel(LightType.SKY, pos.south())  ||
+                lightLevel > toServerWorld().getLightLevel(LightType.SKY, pos.east())   ||
+                lightLevel > toServerWorld().getLightLevel(LightType.SKY, pos.west())   );
     }
 }
