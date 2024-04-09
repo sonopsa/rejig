@@ -23,13 +23,13 @@ public class CameraOffsetHandler {
         prevUpwardSpeed = upwardSpeed;
         upwardSpeed = (float) (focusedEntity.getY() - focusedEntity.prevY);
 
-        heightScale = MathHelper.lerp(delta*2, lastHeightScale, heightScale);
+        heightScale = MathHelper.lerp(delta*(MathHelper.SQUARE_ROOT_OF_TWO), lastHeightScale, heightScale); // YOLO
         lastHeightScale = heightScale;
 
         lastHeightOffset = heightOffset;
         heightOffset = MathHelper.lerp(delta*12, heightOffset, 0.0f);
     }
     public void updateFrame(float delta){
-        smoothBob = MathHelper.lerp(delta/15, smoothBob, bobFactor);
+        smoothBob = MathHelper.lerp(delta/13, smoothBob, bobFactor);
     }
 }

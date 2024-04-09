@@ -31,24 +31,24 @@ public abstract class FrameViewBobOffset {
     private Camera camera;
 
     @Inject(method = "bobView", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"))
-    private void stuff(MatrixStack matrices, float tickDelta, CallbackInfo ci, @Local(ordinal = 3) LocalFloatRef bobFactorRef){
+    private void viewBobbingInject(MatrixStack matrices, float tickDelta, CallbackInfo ci, @Local(ordinal = 3) LocalFloatRef bobFactorRef){
         deltaTime = client.isPaused() ? 0 : client.getLastFrameDuration(); // frame-time in ticks
 //        deltaTime *= client.world.getTickManager().getTickRate()/20;
 
         float deltaSpeed = camOffset.upwardSpeed - camOffset.prevUpwardSpeed;
         float tiltFac = -(camOffset.upwardSpeed + deltaSpeed * tickDelta);
-        camOffset.verticalTilt = MathHelper.lerp(deltaTime/2, camOffset.verticalTilt, tiltFac);
+        camOffset.verticalTilt = MathHelper.lerp(deltaTime/2.2f, camOffset.verticalTilt, (float) Math.tanh(tiltFac/2.0) ); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
 
         Vector3d stuff = new Vector3d(0, MathHelper.lerp(tickDelta, -camOffset.lastHeightOffset, -camOffset.heightOffset), 0);
         stuff.rotateX(Math.toRadians(camera.getPitch()));
         matrices.translate(stuff.x, stuff.y, stuff.z);
 
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) Math.tanh(camOffset.verticalTilt*2)));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*4)*0.7f)));
 
         camOffset.bobFactor = bobFactorRef.get();
         camOffset.updateFrame(deltaTime);
 
-        camOffset.heightScale = 1 - bobFactorRef.get() * 0.5f;
+        camOffset.heightScale = 1 - bobFactorRef.get() * 0.7f;
 
         bobFactorRef.set(camOffset.bobFactor);
     }
@@ -66,7 +66,7 @@ public abstract class FrameViewBobOffset {
         matrices.translate(MathHelper.sin(g * (float)Math.PI) * handBobFactor * 1.3f, -Math.abs(MathHelper.cos(g * (float)Math.PI) * handBobFactor) * 1.4f - camOffset.smoothBob * 0.35, 0.0f);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.sin((g * (float)Math.PI)) * handBobFactor * 3.0f));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(Math.abs(MathHelper.cos(g * (float)Math.PI - 0.2f) * handBobFactor) * 5.0f));
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) Math.tanh(camOffset.verticalTilt*1.5)*7));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(camOffset.verticalTilt * 8));
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(camOffset.smoothBob*20));
     }
 
@@ -74,14 +74,17 @@ public abstract class FrameViewBobOffset {
     private float verticalScale(float x) {
         return -camOffset.bobFactor - x;
     }
+
     @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 0.5f))
     private float horizontalScale(float constant){
         return constant * 1;
     }
+
     @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 3.0f))
     private float rollScale(float constant){
         return constant * 1;
     }
+
     @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 5.0f))
     private float pitchScale(float constant){
         return constant * 1;
