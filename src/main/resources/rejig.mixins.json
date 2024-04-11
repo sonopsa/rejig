@@ -14,6 +14,7 @@
     "entity.FoxLongerWindup",
     "entity.FoxMoreHealth",
     "entity.ParrotStayOn",
+    "event.WorldLoadEvent",
     "world.BiomeSnowHeight"
   ],
   "server": [
