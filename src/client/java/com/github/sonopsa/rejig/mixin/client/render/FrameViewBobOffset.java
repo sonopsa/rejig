@@ -37,13 +37,13 @@ public abstract class FrameViewBobOffset {
 
         float deltaSpeed = camOffset.upwardSpeed - camOffset.prevUpwardSpeed;
         float tiltFac = -(camOffset.upwardSpeed + deltaSpeed * tickDelta);
-        camOffset.verticalTilt = MathHelper.lerp(deltaTime/2.2f, camOffset.verticalTilt, (float) Math.tanh(tiltFac/2.0) ); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
+        camOffset.verticalTilt = MathHelper.lerp(deltaTime/2.6f, camOffset.verticalTilt, (float) Math.tanh(tiltFac/2.0) ); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
 
         Vector3d stuff = new Vector3d(0, MathHelper.lerp(tickDelta, -camOffset.lastHeightOffset, -camOffset.heightOffset), 0);
         stuff.rotateX(Math.toRadians(camera.getPitch()));
         matrices.translate(stuff.x, stuff.y, stuff.z);
 
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*4)*0.7f)));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*4)*0.6f)));
 
         camOffset.bobFactor = bobFactorRef.get();
         camOffset.updateFrame(deltaTime);
