@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class WorldLoadEvent {
     @Inject(at = @At("TAIL"), method = "loadWorld")
     private void init(CallbackInfo info) {
-        Rejig.onWorldLoad();
+        Rejig.Instance.onWorldLoad();
     }
 }
