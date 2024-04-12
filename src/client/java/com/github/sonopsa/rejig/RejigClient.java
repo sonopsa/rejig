@@ -10,7 +10,7 @@ public class RejigClient implements ClientModInitializer {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 	}
 
-	public static void onClientPlayerSpwan(){
+	public static void onClientPlayerSpawn(){
 		// This runs every time the player loads in to a world or respawns.
 		camOffset = new CameraOffsetHandler();
 	}

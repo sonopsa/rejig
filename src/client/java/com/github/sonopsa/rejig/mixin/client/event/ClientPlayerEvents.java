@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientPlayerEvents {
     @Inject(method = "init", at = @At("HEAD"))
     private void clientPlayerInit(CallbackInfo ci) {
-        RejigClient.onClientPlayerSpwan();
+        RejigClient.onClientPlayerSpawn();
     }
 }
