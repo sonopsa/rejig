@@ -1,5 +1,6 @@
-package com.github.sonopsa.rejig.mixin.client.render;
+package com.github.sonopsa.rejig.mixin.client.render.camera;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +17,9 @@ public abstract class TickEyeHeightOffset {
 
     @Inject(method = "updateEyeHeight", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Camera;lastCameraY:F", ordinal = 0))
     public void lowerEyeHeightStuff(CallbackInfo ci) {
-        cameraY /= camOffset.lastHeightScale;
+        if (MinecraftClient.getInstance().options.getBobView().getValue()){
+            cameraY /= camOffset.lastHeightScale;
+        }
 //        cameraY -= lastHeightOffset;
     }
 
@@ -25,7 +28,9 @@ public abstract class TickEyeHeightOffset {
         camOffset.updateTick((float) 1 /20, focusedEntity);
 
 //        cameraY += heightOffset;
-        cameraY *= camOffset.heightScale;
+        if (MinecraftClient.getInstance().options.getBobView().getValue()){
+            cameraY *= camOffset.heightScale;
+        }
     }
 
     @ModifyConstant(method = "updateEyeHeight", constant = @Constant(floatValue = 0.5f))

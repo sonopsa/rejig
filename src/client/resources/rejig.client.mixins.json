@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.github.sonopsa.rejig.mixin.client",
+  "plugin": "com.github.sonopsa.rejig.RejigMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
@@ -9,8 +10,12 @@
     "entity.GetStepHeightOffset",
     "event.ClientPlayerEvents",
     "gui.ChatPeek",
-    "render.FrameViewBobOffset",
-    "render.TickEyeHeightOffset"
+    "render.camera.FrameViewBobOffset",
+    "render.camera.IdleHandAnimation",
+    "render.camera.TickEyeHeightOffset",
+    "render.camera.ViewModelSway",
+    "render.particle.BrighterBlockParticles",
+    "render.particle.ParticlesFaceCamera"
   ],
   "injectors": {
     "defaultRequire": 1
