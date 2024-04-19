@@ -1,7 +1,6 @@
-package com.github.sonopsa.rejig.mixin.client.render;
+package com.github.sonopsa.rejig.mixin.client.render.camera;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
@@ -31,26 +30,33 @@ public abstract class FrameViewBobOffset {
     private Camera camera;
 
     @Inject(method = "bobView", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"))
-    private void viewBobbingInject(MatrixStack matrices, float tickDelta, CallbackInfo ci, @Local(ordinal = 3) LocalFloatRef bobFactorRef){
+    private void viewBobbingInject(MatrixStack matrices, float tickDelta, CallbackInfo ci, @Local(ordinal = 2) float deltaVelocity, @Local(ordinal = 3) float bobFactor){
         deltaTime = client.isPaused() ? 0 : client.getLastFrameDuration(); // frame-time in ticks
 //        deltaTime *= client.world.getTickManager().getTickRate()/20;
 
+        // vertical tilt
         float deltaSpeed = camOffset.upwardSpeed - camOffset.prevUpwardSpeed;
         float tiltFac = -(camOffset.upwardSpeed + deltaSpeed * tickDelta);
-        camOffset.verticalTilt = MathHelper.lerp(deltaTime/2.6f, camOffset.verticalTilt, (float) Math.tanh(tiltFac/2.0) ); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
+        camOffset.verticalTilt = MathHelper.clampedLerp(camOffset.verticalTilt, (float) Math.tanh(tiltFac/2.0), deltaTime/2.2f); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
 
-        Vector3d stuff = new Vector3d(0, MathHelper.lerp(tickDelta, -camOffset.lastHeightOffset, -camOffset.heightOffset), 0);
-        stuff.rotateX(Math.toRadians(camera.getPitch()));
-        matrices.translate(stuff.x, stuff.y, stuff.z);
+        // view offset
+        Vector3d viewOffset = new Vector3d(0, MathHelper.lerp(tickDelta, -camOffset.lastHeightOffset, -camOffset.heightOffset), 0); // get step height offset
 
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*4)*0.6f)));
+        float x = -camOffset.bobFactor + Math.abs(MathHelper.cos((deltaVelocity * (float)Math.PI)) * bobFactor);
+        viewOffset.y += x * camOffset.smoothBob*10;
 
-        camOffset.bobFactor = bobFactorRef.get();
+        viewOffset.rotateX(Math.toRadians(camera.getPitch()));
+        matrices.translate(viewOffset.x, viewOffset.y, viewOffset.z);
+
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*4)*0.5f)));
+
+        // set bobFactor
+        camOffset.bobFactor = bobFactor;
         camOffset.updateFrame(deltaTime);
 
-        camOffset.heightScale = 1 - bobFactorRef.get() * 0.7f;
+        camOffset.heightScale = 1 - bobFactor * 0.64f;
 
-        bobFactorRef.set(camOffset.bobFactor);
+//        bobFactorRef.set(camOffset.bobFactor);
     }
 
     @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
@@ -63,7 +69,7 @@ public abstract class FrameViewBobOffset {
         float g = -(playerEntity.horizontalSpeed + deltaSpeed * tickDelta);
         float handBobFactor = camOffset.smoothBob * camOffset.bobFactor * 10;
 
-        matrices.translate(MathHelper.sin(g * (float)Math.PI) * handBobFactor * 1.3f, -Math.abs(MathHelper.cos(g * (float)Math.PI) * handBobFactor) * 1.4f - camOffset.smoothBob * 0.35, 0.0f);
+        matrices.translate(MathHelper.sin(g * (float)Math.PI) * handBobFactor * 1.1f, -Math.abs(MathHelper.cos(g * (float)Math.PI) * handBobFactor) * 0.9f - camOffset.smoothBob * 0.30, 0.0f);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.sin((g * (float)Math.PI)) * handBobFactor * 3.0f));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(Math.abs(MathHelper.cos(g * (float)Math.PI - 0.2f) * handBobFactor) * 5.0f));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(camOffset.verticalTilt * 8));
@@ -72,7 +78,7 @@ public abstract class FrameViewBobOffset {
 
     @ModifyArg(method = "bobView", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"), index = 1)
     private float verticalScale(float x) {
-        return -camOffset.bobFactor - x;
+        return 0;
     }
 
     @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 0.5f))
@@ -87,6 +93,6 @@ public abstract class FrameViewBobOffset {
 
     @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 5.0f))
     private float pitchScale(float constant){
-        return constant * 1;
+        return constant * 0.6f;
     }
 }
