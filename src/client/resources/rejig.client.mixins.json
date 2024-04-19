@@ -8,6 +8,7 @@
     "ExampleClientMixin",
     "entity.GetStepHeightOffset",
     "event.ClientPlayerEvents",
+    "gui.ChatPeek",
     "render.FrameViewBobOffset",
     "render.TickEyeHeightOffset"
   ],
