@@ -6,12 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Rejig implements ModInitializer {
-    public static final Logger LOGGER = LoggerFactory.getLogger("rejig");
+    public static final Logger LOGGER = LoggerFactory.getLogger("Rejig");
 	public static Rejig Instance;
+
+	public static RejigConfig Config;
 
 	@Override
 	public void onInitialize() {
 		Instance = this;
+
+		Config = new RejigConfig();
+		Config.Config.loadFromFile();
 	}
 
 	public void onWorldLoad() {

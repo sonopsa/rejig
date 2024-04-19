@@ -11,8 +11,13 @@ public class RejigClient implements ClientModInitializer {
 	public static CameraOffsetHandler camOffset = null;
 	public static KeyBinding chatPeekKeybind;
 
+	public static RejigClientConfig ClientConfig;
+
 	@Override
 	public void onInitializeClient() {
+		ClientConfig = new RejigClientConfig();
+		ClientConfig.Config.loadFromFile();
+
 		chatPeekKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 			"rejig.keybind.chatpeek",
 			InputUtil.Type.KEYSYM,
