@@ -1,16 +1,14 @@
 package com.github.sonopsa.rejig.mixin.client.sodium;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.jellysquid.mods.sodium.client.model.light.data.LightDataAccess;
-import net.minecraft.block.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LightDataAccess.class)
+@Mixin(value = LightDataAccess.class, remap = false)
 public class LightBlockAO {
-    @WrapOperation(method = "compute", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getLuminance()I"))
-    private int stuff(BlockState instance, Operation<Integer> original){
-        return 0;
+    @ModifyExpressionValue(method = "compute", at = @At(value = "CONSTANT", args = {"floatValue=1.0F"}, ordinal = 0))
+    private float lightBlockAOLevel(float original){
+        return original*0.75f;
     }
 }

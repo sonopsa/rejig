@@ -24,10 +24,15 @@ public class RejigMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+
         if (mixinClassName.equals("com.github.sonopsa.rejig.mixin.client.render.particle.ParticlesFaceCamera") && FabricLoader.getInstance().isModLoaded("sodium")) {
-            Rejig.LOGGER.info("USING SODIUM COMPAT FOR CAMERA FACING PARTICLES");
             return false;
         }
+
+        if (mixinClassName.startsWith("com.github.sonopsa.rejig.mixin.client.sodium") && !FabricLoader.getInstance().isModLoaded("sodium")) {
+            return false;
+        }
+
         return true;
     }
 

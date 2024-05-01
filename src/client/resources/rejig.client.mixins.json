@@ -19,7 +19,9 @@
     "render.world.CustomLightmap",
     "render.world.NoDarkenWorldShading",
     "render.world.PowderSnowBlockAO",
-    "sodium.LightBlockAO"
+    "sodium.LightBlockAO",
+    "sodium.BlockRendererUseGlowingLight",
+    "sodium.GetGlowingLight"
   ],
   "injectors": {
     "defaultRequire": 1

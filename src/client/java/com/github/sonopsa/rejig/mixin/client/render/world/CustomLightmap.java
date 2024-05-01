@@ -32,7 +32,7 @@ public abstract class CustomLightmap {
         return (float) Math.sin((Math.pow(x, 0.75))*Math.PI/2);
     }
 
-    @Inject(method = "update", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;add(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;"))
+    @Inject(method = "update", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;add(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;", remap = false))
     private void netherColorLerp(float delta, CallbackInfo ci, @Local ClientWorld clientWorld, @Local(ordinal = 1) LocalRef<Vector3f> vectorRef) {
         if (clientWorld.getDimensionEffects().isDarkened()){
             Vector3f skyLightColor = vectorRef.get();
@@ -45,7 +45,7 @@ public abstract class CustomLightmap {
     }
 
     // end dimension color
-    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;<init>(FFF)V", ordinal = 2))
+    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;<init>(FFF)V", ordinal = 2, remap = false))
     private void endColorLerp(Args args) {
         float a0 = args.get(0);
         float a1 = args.get(1);
