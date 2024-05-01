@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HeldItemRenderer.class)
 public class IdleHandAnimation {
     @Unique
-    private static final float SCALE_SETTING = 1.0f;
+    private static final float SCALE_SETTING = 1.5f;
     @Unique private double timer = 0;
     @Unique private float scale = SCALE_SETTING;
     @Shadow @Final private MinecraftClient client;
