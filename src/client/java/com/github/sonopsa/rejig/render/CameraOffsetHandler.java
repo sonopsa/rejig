@@ -27,7 +27,7 @@ public class CameraOffsetHandler {
         lastHeightScale = heightScale;
 
         lastHeightOffset = heightOffset;
-        heightOffset = MathHelper.lerp(delta*12, heightOffset, 0.0f);
+        heightOffset = MathHelper.lerp(delta*14, heightOffset, 0.0f);
     }
     public void updateFrame(float delta){
         smoothBob = MathHelper.clampedLerp(smoothBob, bobFactor, delta/10);

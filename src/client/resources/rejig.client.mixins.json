@@ -6,7 +6,6 @@
   "mixins": [
   ],
   "client": [
-    "ExampleClientMixin",
     "entity.GetStepHeightOffset",
     "event.ClientPlayerEvents",
     "gui.ChatPeek",
@@ -14,10 +13,15 @@
     "render.camera.IdleHandAnimation",
     "render.camera.TickEyeHeightOffset",
     "render.camera.ViewModelSway",
+    "render.entity.BrighterEntityOverlay",
     "render.particle.BrighterBlockParticles",
-    "render.particle.ParticlesFaceCamera"
+    "render.particle.ParticlesFaceCamera",
+    "render.world.CustomLightmap",
+    "render.world.NoDarkenWorldShading",
+    "render.world.PowderSnowBlockAO",
+    "sodium.LightBlockAO"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

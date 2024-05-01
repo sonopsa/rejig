@@ -15,7 +15,7 @@ public class ViewModelSway {
             "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;Lnet/minecraft/client/network/ClientPlayerEntity;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/RotationAxis;rotationDegrees(F)Lorg/joml/Quaternionf;", ordinal = 0))
         private Quaternionf handSwayVertical(RotationAxis instance, float deg, @Local(argsOnly = true) ClientPlayerEntity player){
-            return instance.rotationDegrees((float) Math.tanh(deg/3.5)*14);
+            return instance.rotationDegrees((float) Math.tanh(deg/2.5)*10);
     }
     @Redirect(method = "renderItem(FLnet/minecraft/client/util/math/MatrixStack;" +
             "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;Lnet/minecraft/client/network/ClientPlayerEntity;I)V"

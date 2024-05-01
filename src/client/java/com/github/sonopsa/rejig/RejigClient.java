@@ -10,7 +10,6 @@ import org.lwjgl.glfw.GLFW;
 public class RejigClient implements ClientModInitializer {
 	public static CameraOffsetHandler camOffset = null;
 	public static KeyBinding chatPeekKeybind;
-
 	public static RejigClientConfig ClientConfig;
 
 	@Override
@@ -19,15 +18,16 @@ public class RejigClient implements ClientModInitializer {
 		ClientConfig.Config.loadFromFile();
 
 		chatPeekKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"rejig.keybind.chatpeek",
-			InputUtil.Type.KEYSYM,
-			GLFW.GLFW_KEY_Z,
-			"rejig.keybinds"
-		));
+			"rejig.keybind.chatpeek", InputUtil.Type.KEYSYM,
+			GLFW.GLFW_KEY_Z, "rejig.keybinds"));
 	}
 
 	public static void onClientPlayerSpawn(){
 		// This runs every time the player loads in to a world or respawns.
 		camOffset = new CameraOffsetHandler();
+	}
+
+	public RejigClient instance(){
+		return this;
 	}
 }

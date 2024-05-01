@@ -15,20 +15,22 @@ public abstract class TickEyeHeightOffset {
     @Shadow private float cameraY;
     @Shadow private Entity focusedEntity;
 
+//    @Shadow public abstract CameraSubmersionType getSubmersionType();
+
     @Inject(method = "updateEyeHeight", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Camera;lastCameraY:F", ordinal = 0))
     public void lowerEyeHeightStuff(CallbackInfo ci) {
         if (MinecraftClient.getInstance().options.getBobView().getValue()){
             cameraY /= camOffset.lastHeightScale;
+//            cameraY -= lastHeightOffset;
         }
-//        cameraY -= lastHeightOffset;
     }
 
     @Inject(method = "updateEyeHeight", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Camera;cameraY:F", ordinal = 3, shift = At.Shift.AFTER))
     public void lowerEyeHeightStuffz(CallbackInfo ci) {
         camOffset.updateTick((float) 1 /20, focusedEntity);
 
-//        cameraY += heightOffset;
         if (MinecraftClient.getInstance().options.getBobView().getValue()){
+//            cameraY += heightOffset;
             cameraY *= camOffset.heightScale;
         }
     }

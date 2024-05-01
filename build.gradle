@@ -17,15 +17,8 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 	maven {
-		name = 'TerraformersMC'
-		url = 'https://maven.terraformersmc.com'
-	}
-	maven {
 		name = 'Modrinth'
 		url = 'https://api.modrinth.com/maven'
-		content {
-			includeGroup 'maven.modrinth'
-		}
 	}
 }
 
@@ -54,9 +47,12 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	// Fabric ASM
+//	implementation 'com.github.Chocohead:Fabric-ASM:v2.3'
+
 	// Mod Menu
-	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
-	modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modCompileOnly "maven.modrinth:modmenu:${project.modmenu_version}"
+	modLocalRuntime "maven.modrinth:modmenu:${project.modmenu_version}"
 
 	// Sodium support
 	modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
