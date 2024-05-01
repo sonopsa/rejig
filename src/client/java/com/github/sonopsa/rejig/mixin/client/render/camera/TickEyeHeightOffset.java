@@ -1,5 +1,6 @@
 package com.github.sonopsa.rejig.mixin.client.render.camera;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
@@ -35,7 +36,7 @@ public abstract class TickEyeHeightOffset {
         }
     }
 
-    @ModifyConstant(method = "updateEyeHeight", constant = @Constant(floatValue = 0.5f))
+    @ModifyExpressionValue(method = "updateEyeHeight", at = @At(value = "CONSTANT", args = "floatValue=0.5f"))
     private float smoother(float constant){
         return constant*0.8f;
     }

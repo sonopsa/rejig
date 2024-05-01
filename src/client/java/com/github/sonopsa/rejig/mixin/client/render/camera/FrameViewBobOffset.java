@@ -1,5 +1,6 @@
 package com.github.sonopsa.rejig.mixin.client.render.camera;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -82,17 +83,17 @@ public abstract class FrameViewBobOffset {
         return 0;
     }
 
-    @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 0.5f))
-    private float horizontalScale(float constant){
-        return constant * 1;
-    }
+//    @ModifyExpressionValue(method = "bobView", at = @At(value = "CONSTANT", args = "floatValue=0.5f"))
+//    private float horizontalScale(float constant){
+//        return constant * 1;
+//    }
+//
+//    @ModifyExpressionValue(method = "bobView", at = @At(value = "CONSTANT", args = "floatValue=3.0f"))
+//    private float rollScale(float constant){
+//        return constant * 1;
+//    }
 
-    @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 3.0f))
-    private float rollScale(float constant){
-        return constant * 1;
-    }
-
-    @ModifyConstant(method = "bobView", constant = @Constant(floatValue = 5.0f))
+    @ModifyExpressionValue(method = "bobView", at = @At(value = "CONSTANT", args = "floatValue=5.0f"))
     private float pitchScale(float constant){
         return constant * 0.6f;
     }

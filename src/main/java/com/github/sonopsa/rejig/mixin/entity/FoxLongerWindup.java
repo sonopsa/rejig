@@ -1,14 +1,14 @@
 package com.github.sonopsa.rejig.mixin.entity;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.entity.passive.FoxEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(FoxEntity.class)
 public class FoxLongerWindup {
-    @ModifyConstant(method = "tick", constant = @Constant(floatValue = 0.2F, ordinal = 1))
+    @ModifyExpressionValue(method = "tick", at = @At(value = "CONSTANT", args = "floatValue=0.2f", ordinal = 1))
     private float windupSpeed(float constant){
-        return true ? constant/3.45F : constant;
+        return constant/3.45F;
     }
 }

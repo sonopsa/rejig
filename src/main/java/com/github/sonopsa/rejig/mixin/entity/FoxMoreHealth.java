@@ -1,14 +1,14 @@
 package com.github.sonopsa.rejig.mixin.entity;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.entity.passive.FoxEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(FoxEntity.class)
 public class FoxMoreHealth {
-    @ModifyConstant(method = "createFoxAttributes", constant = @Constant(doubleValue = 10.0))
+    @ModifyExpressionValue(method = "createFoxAttributes", at = @At(value = "CONSTANT", args = "doubleValue=10.0"))
     private static double injected(double constant){
-        return true ? 20.0 : constant;
+        return 20.0;
     }
 }
