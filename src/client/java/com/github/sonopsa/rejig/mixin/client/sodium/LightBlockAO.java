@@ -9,6 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class LightBlockAO {
     @ModifyExpressionValue(method = "compute", at = @At(value = "CONSTANT", args = {"floatValue=1.0f"}, ordinal = 0))
     private float lightBlockAOLevel(float original){
-        return original*0.75f;
+        return original*0.65f;
     }
 }
