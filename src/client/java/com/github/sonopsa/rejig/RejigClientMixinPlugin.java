@@ -11,7 +11,7 @@ import java.util.Set;
 // https://github.com/ArkoSammy12/Aquifer/blob/main/src/main/java/xd/arkosammy/aquifer/AquiferMixinPlugin.java
 // example mixin plugin
 
-public class RejigMixinPlugin implements IMixinConfigPlugin {
+public class RejigClientMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {

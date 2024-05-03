@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "com.github.sonopsa.rejig.mixin.client",
-  "plugin": "com.github.sonopsa.rejig.RejigMixinPlugin",
+  "plugin": "com.github.sonopsa.rejig.RejigClientMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
