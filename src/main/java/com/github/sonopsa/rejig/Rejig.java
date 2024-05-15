@@ -15,11 +15,11 @@ public class Rejig implements ModInitializer {
 	public void onInitialize() {
 		Instance = this;
 
-		Config = new RejigConfig();
-		Config.Config.loadFromFile();
+//		Config = new RejigConfig();
+//		Config.Config.loadFromFile();
 	}
 
 	public void onWorldLoad() {
-		Rejig.LOGGER.info("test");
+//		Rejig.LOGGER.info("test");
 	}
 }

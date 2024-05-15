@@ -16,6 +16,6 @@ public abstract class BeaconLightFiltering extends Block {
 
     @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos p) {
-        return true ? 14 : super.getOpacity(state, world, p);
+        return 14;
     }
 }

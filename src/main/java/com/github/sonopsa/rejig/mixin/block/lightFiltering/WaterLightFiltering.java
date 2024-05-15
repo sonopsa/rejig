@@ -23,6 +23,6 @@ public class WaterLightFiltering extends Block {
 
     @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos p) {
-        return this.fluid.isIn(FluidTags.WATER) && true ? 2 : super.getOpacity(state, world, p);
+        return this.fluid.isIn(FluidTags.WATER) ? 2 : super.getOpacity(state, world, p);
     }
 }

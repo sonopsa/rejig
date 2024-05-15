@@ -6,6 +6,7 @@ import net.minecraft.util.math.MathHelper;
 public class CameraOffsetHandler {
     public float heightOffset = 0.0f;
     public float lastHeightOffset = 0.0f;
+
     public float heightScale = 1.0f;
     public float lastHeightScale = 1.0f;
 

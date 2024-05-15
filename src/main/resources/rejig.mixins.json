@@ -3,7 +3,6 @@
   "package": "com.github.sonopsa.rejig.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ExampleMixin",
     "block.lightFiltering.AbstractCauldronLightFiltering",
     "block.lightFiltering.AnvilLightFiltering",
     "block.lightFiltering.BeaconLightFiltering",
@@ -14,8 +13,7 @@
     "entity.FoxLongerWindup",
     "entity.FoxMoreHealth",
     "entity.ParrotStayOn",
-    "event.WorldLoadEvent",
-    "world.BiomeSnowHeight"
+    "event.WorldLoadEvent"
   ],
   "server": [
   ],

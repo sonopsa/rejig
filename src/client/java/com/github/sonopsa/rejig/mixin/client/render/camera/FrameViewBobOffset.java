@@ -38,10 +38,12 @@ public abstract class FrameViewBobOffset {
         // vertical tilt
         float deltaSpeed = camOffset.upwardSpeed - camOffset.prevUpwardSpeed;
         float tiltFac = -(camOffset.upwardSpeed + deltaSpeed * tickDelta);
-        camOffset.verticalTilt = MathHelper.clampedLerp(camOffset.verticalTilt, (float) Math.tanh(tiltFac/1.8), deltaTime/2.9f); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
+        camOffset.verticalTilt = MathHelper.clampedLerp(camOffset.verticalTilt, (float) Math.tanh(tiltFac/1.8), deltaTime/2.4f); // max verticalTilt for jumping is about 0.5 (max possible is 1.0)
 
         // view offset
-        Vector3d viewOffset = new Vector3d(0, MathHelper.lerp(tickDelta, -camOffset.lastHeightOffset, -camOffset.heightOffset), 0); // get step height offset
+        float stepOffset = 0;
+//        stepOffset = -MathHelper.lerp(tickDelta, camOffset.lastHeightOffset, camOffset.heightOffset);
+        Vector3d viewOffset = new Vector3d(0, stepOffset, 0); // get step height offset
 
         float x = -camOffset.bobFactor + Math.abs(MathHelper.cos((deltaVelocity * (float)Math.PI)) * bobFactor);
         viewOffset.y += x * camOffset.smoothBob*10;
@@ -50,7 +52,7 @@ public abstract class FrameViewBobOffset {
         matrices.translate(viewOffset.x, viewOffset.y, viewOffset.z);
 
         // vertical view tilt
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*2)*0.5f)));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (Math.tanh(camOffset.verticalTilt*2)*0.8f)));
 
         // set bobFactor
         camOffset.bobFactor = bobFactor;

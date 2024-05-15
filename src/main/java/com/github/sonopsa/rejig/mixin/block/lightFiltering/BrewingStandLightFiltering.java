@@ -16,6 +16,6 @@ public abstract class BrewingStandLightFiltering extends Block {
 
     @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos p) {
-        return true ? 3 : super.getOpacity(state, world, p);
+        return 3;
     }
 }

@@ -22,7 +22,7 @@ public abstract class TickEyeHeightOffset {
     public void lowerEyeHeightStuff(CallbackInfo ci) {
         if (MinecraftClient.getInstance().options.getBobView().getValue()){
             cameraY /= camOffset.lastHeightScale;
-//            cameraY -= lastHeightOffset;
+//            cameraY += camOffset.lastHeightOffset;
         }
     }
 
@@ -31,7 +31,7 @@ public abstract class TickEyeHeightOffset {
         camOffset.updateTick((float) 1 /20, focusedEntity);
 
         if (MinecraftClient.getInstance().options.getBobView().getValue()){
-//            cameraY += heightOffset;
+//            cameraY -= camOffset.heightOffset;
             cameraY *= camOffset.heightScale;
         }
     }

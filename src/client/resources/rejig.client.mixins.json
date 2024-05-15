@@ -15,14 +15,15 @@
     "render.camera.ViewModelSway",
     "render.entity.BrighterEntityOverlay",
     "render.particle.BrighterBlockParticles",
-    "render.particle.ParticlesFaceCamera",
+    "render.world.BrighterStars",
     "render.world.CustomLightmap",
+    "render.world.LargerStars",
     "render.world.NoDarkenWorldShading",
     "render.world.PowderSnowBlockAO",
     "sodium.BlockRendererUseGlowingLight",
     "sodium.GetGlowingLight",
-    "sodium.LightBlockAO",
-    "sodium.GlowingFluids"
+    "sodium.GlowingFluids",
+    "sodium.LightBlockAO"
   ],
   "injectors": {
     "defaultRequire": 1
