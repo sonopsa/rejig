@@ -20,6 +20,7 @@
     "render.world.LargerStars",
     "render.world.NoDarkenWorldShading",
     "render.world.PowderSnowBlockAO",
+    "render.world.SmootherSky",
     "sodium.BlockRendererUseGlowingLight",
     "sodium.GetGlowingLight",
     "sodium.GlowingFluids",

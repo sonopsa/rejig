@@ -13,7 +13,9 @@
     "entity.FoxLongerWindup",
     "entity.FoxMoreHealth",
     "entity.ParrotStayOn",
-    "event.WorldLoadEvent"
+    "entity.SlowerAirSprintingSpeed",
+    "entity.SlowerSprintingSpeed",
+    "item.LargerBundleCapacity"
   ],
   "server": [
   ],
