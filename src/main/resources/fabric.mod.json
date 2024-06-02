@@ -18,19 +18,12 @@
 		"main": [
 			"com.github.sonopsa.rejig.Rejig"
 		],
-		"client": [
-			"com.github.sonopsa.rejig.RejigClient"
-		],
 		"fabric-datagen": [
 			"com.github.sonopsa.rejig.RejigDataGenerator"
 		]
 	},
 	"mixins": [
-		"rejig.mixins.json",
-		{
-			"config": "rejig.client.mixins.json",
-			"environment": "client"
-		}
+		"rejig.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
